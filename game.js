@@ -311,7 +311,7 @@ class SnakeGame {
         );
         
         // Add food animation
-        const time = Date.now();
+        const time = performance.now();
         const scale = 1 + Math.sin(time * 0.01) * 0.1;
         const offset = (this.gridSize * (1 - scale)) / 2;
         this.ctx.fillStyle = '#FF7043';

@@ -225,7 +225,7 @@ class SnakeGame {
         this.draw();
         
         // Adaptive game speed based on score
-        const speed = Math.max(100, 200 - this.score * 2);
+        const speed = Math.max(MIN_GAME_SPEED, BASE_SPEED - this.score * SPEED_INCREASE_RATE);
         this.gameLoopId = setTimeout(() => this.gameLoop(), speed);
     }
     

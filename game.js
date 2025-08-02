@@ -92,20 +92,25 @@ class SnakeGame {
         
         // Touch controls
         const controlBtns = document.querySelectorAll('.control-btn');
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         
         controlBtns.forEach(btn => {
-            if (isTouchDevice) {
-                btn.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
+            let touchStarted = false;
+            
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                touchStarted = true;
+                this.handleTouchControl(btn.dataset.direction);
+            });
+            
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Only handle click if touch didn't already handle it
+                if (!touchStarted) {
                     this.handleTouchControl(btn.dataset.direction);
-                });
-            } else {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.handleTouchControl(btn.dataset.direction);
-                });
-            }
+                }
+                // Reset flag after a short delay
+                setTimeout(() => touchStarted = false, 100);
+            });
         });
         
         // Restart button

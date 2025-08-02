@@ -1,4 +1,10 @@
 // Cross-platform Snake Game
+
+// Game speed constants
+window.BASE_SPEED = 150; // Base game speed in milliseconds
+window.MIN_GAME_SPEED = 80; // Minimum game speed (fastest)
+window.SPEED_INCREASE_RATE = 2; // Speed increase per score point
+
 class SnakeGame {
     constructor() {
         this.canvas = document.getElementById('gameCanvas');
@@ -157,9 +163,9 @@ class SnakeGame {
     }
     
     handleTouchControl(direction) {
+        // Start game if not running and set direction
         if (!this.gameRunning) {
             this.start();
-            return;
         }
         
         switch(direction) {
@@ -225,7 +231,7 @@ class SnakeGame {
         this.draw();
         
         // Adaptive game speed based on score
-        const speed = Math.max(MIN_GAME_SPEED, BASE_SPEED - this.score * SPEED_INCREASE_RATE);
+        const speed = Math.max(window.MIN_GAME_SPEED, window.BASE_SPEED - this.score * window.SPEED_INCREASE_RATE);
         this.gameLoopId = setTimeout(() => this.gameLoop(), speed);
     }
     

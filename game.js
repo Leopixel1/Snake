@@ -55,24 +55,24 @@ class SnakeGame {
         
         // Keep it square
         const size = Math.min(maxWidth, maxHeight);
-        this.canvas.width = size;
-        this.canvas.height = size;
         
         // Calculate grid size based on canvas size
         this.tileCount = 20;
         this.gridSize = size / this.tileCount;
         
-        // Set up high DPI display support
+        // Set up canvas dimensions and high DPI display support
         const devicePixelRatio = window.devicePixelRatio || 1;
-        const rect = this.canvas.getBoundingClientRect();
-        this.canvas.width = rect.width * devicePixelRatio;
-        this.canvas.height = rect.height * devicePixelRatio;
-        this.ctx.scale(devicePixelRatio, devicePixelRatio);
-        this.canvas.style.width = rect.width + 'px';
-        this.canvas.style.height = rect.height + 'px';
         
-        // Recalculate grid size for high DPI
-        this.gridSize = rect.width / this.tileCount;
+        // Set CSS size
+        this.canvas.style.width = size + 'px';
+        this.canvas.style.height = size + 'px';
+        
+        // Set actual canvas size for high DPI
+        this.canvas.width = size * devicePixelRatio;
+        this.canvas.height = size * devicePixelRatio;
+        
+        // Scale context for high DPI
+        this.ctx.scale(devicePixelRatio, devicePixelRatio);
     }
     
     detectPlatform() {
@@ -92,15 +92,20 @@ class SnakeGame {
         
         // Touch controls
         const controlBtns = document.querySelectorAll('.control-btn');
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
         controlBtns.forEach(btn => {
-            btn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                this.handleTouchControl(btn.dataset.direction);
-            });
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.handleTouchControl(btn.dataset.direction);
-            });
+            if (isTouchDevice) {
+                btn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.handleTouchControl(btn.dataset.direction);
+                });
+            } else {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.handleTouchControl(btn.dataset.direction);
+                });
+            }
         });
         
         // Restart button
@@ -372,19 +377,29 @@ class SnakeGame {
 }
 
 // Initialize game when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const game = new SnakeGame();
-    
-    // Register service worker for PWA functionality
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('service-worker.js')
-                .then((registration) => {
-                    console.log('SW registered: ', registration);
-                })
-                .catch((registrationError) => {
-                    console.log('SW registration failed: ', registrationError);
-                });
-        });
-    }
+function initGame() {
+    console.log('Initializing game...');
+    window.game = new SnakeGame();
+    console.log('Game initialized:', window.game);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGame);
+} else {
+    // DOM is already loaded
+    initGame();
+}
+
+// Register service worker for PWA functionality
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+            .then((registration) => {
+                console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}
 });

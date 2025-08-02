@@ -186,7 +186,7 @@ body {
 /* Mobile portrait and small screens */
 @media screen and (max-width: 480px) {
     body {
-        overflow: hidden;
+        overflow-x: hidden;
     }
     
     .game-container {

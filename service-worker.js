@@ -1,11 +1,11 @@
 // Service Worker for Snake Game PWA
 const CACHE_NAME = 'snake-game-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/game.js',
-  '/manifest.json'
+  './',
+  './index.html',
+  './style.css',
+  './game.js',
+  './manifest.json'
 ];
 
 // Install event - cache resources

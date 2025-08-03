@@ -25,6 +25,12 @@ A responsive, cross-platform Snake game built with HTML5, CSS3, and vanilla Java
 
 ## 🚀 Getting Started
 
+### Play Online
+The game is hosted on GitHub Pages and can be played directly at:
+**[https://leopixel1.github.io/Snake/](https://leopixel1.github.io/Snake/)**
+
+### Local Development
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/Leopixel1/Snake.git
@@ -60,6 +66,22 @@ The game can be installed as a Progressive Web App:
 - **Local Storage**: High score persistence
 - **Viewport Meta Tags**: Mobile optimization
 - **Touch Events**: Native mobile controls
+
+## 🚀 Deployment
+
+### GitHub Pages
+This project is automatically deployed to GitHub Pages using GitHub Actions. The deployment workflow:
+
+1. **Automatic Deployment**: Triggered on every push to the `main` branch
+2. **Manual Deployment**: Can be triggered manually from the GitHub Actions tab
+3. **Static Hosting**: Serves all files directly without any build process
+4. **PWA Support**: Full Progressive Web App functionality maintained
+
+To enable GitHub Pages for your fork:
+1. Go to your repository settings
+2. Navigate to "Pages" section
+3. Select "GitHub Actions" as the source
+4. The workflow will automatically deploy on the next push to `main`
 
 ## 🌐 Browser Compatibility
 

@@ -91,10 +91,8 @@ class Snake {
     }
 
     move() {
-        if (this.nextDirection.dx !== 0 || this.nextDirection.dy !== 0) {
-            this.dx = this.nextDirection.dx;
-            this.dy = this.nextDirection.dy;
-        }
+        this.dx = this.nextDirection.dx;
+        this.dy = this.nextDirection.dy;
 
         const head = {x: this.body[0].x + this.dx, y: this.body[0].y + this.dy};
         this.body.unshift(head);
@@ -249,7 +247,7 @@ class Game {
             case 'ArrowRight': case 'd': case 'D': e.preventDefault(); dx = 1; break;
         }
 
-        if ((dx !== 0 || dy !== 0) && (this.snake.dx !== 0 || this.snake.dy !== 0 || dx !== 0 || dy !== 0)) {
+        if (dx !== 0 || dy !== 0) {
             this.snake.setDirection(dx, dy);
             if (!this.running) this.start();
         }
@@ -272,8 +270,8 @@ class Game {
         if (this.running) return;
         this.running = true;
         this.ui.hideGameOver();
-        if (this.snake.dx === 0 && this.snake.dy === 0) {
-           this.snake.setDirection(1, 0); // Default direction
+        if (this.snake.dx === 0 && this.snake.dy === 0 && this.snake.nextDirection.dx === 0 && this.snake.nextDirection.dy === 0) {
+            this.snake.setDirection(1, 0); // Default direction only if no direction is queued
         }
         this.gameLoop();
     }

@@ -1,11 +1,14 @@
 // Service Worker for Snake Game PWA
-const CACHE_NAME = 'snake-game-v1';
+const CACHE_NAME = 'snake-game-v2'; // Bump version to ensure new SW is installed
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/game.js',
-  '/manifest.json'
+  './',
+  './index.html',
+  './style.css',
+  './game.js',
+  './manifest.json',
+  './assets/icon-192x192.svg',
+  './assets/icon-512x512.svg',
+  './assets/favicon.svg'
 ];
 
 // Install event - cache resources
@@ -31,8 +34,8 @@ self.addEventListener('fetch', (event) => {
       })
       .catch(() => {
         // If both cache and network fail, return offline page
-        if (event.request.destination === 'document') {
-          return caches.match('/index.html');
+        if (event.request.mode === 'navigate') {
+          return caches.match('./index.html');
         }
       })
   );
